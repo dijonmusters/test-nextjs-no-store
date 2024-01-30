@@ -1,8 +1,17 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const createClient = () => {
-  const cookieStore = cookies();
+async function getCookieData() {
+  return new Promise((resolve) =>
+    setTimeout(() => {
+      // cookies will be called outside of the async context, causing a build-time error
+      resolve(cookies());
+    }, 1000)
+  );
+}
+
+export const createClient = async () => {
+  const cookieStore = await getCookieData();
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

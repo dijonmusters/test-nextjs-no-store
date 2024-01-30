@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/test";
 
 export default async function Index() {
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data } = await supabase.from("data").select();
 
