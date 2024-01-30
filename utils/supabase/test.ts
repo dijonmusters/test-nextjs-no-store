@@ -1,5 +1,6 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { unstable_noStore as noStore } from "next/cache";
 
 async function getCookieData() {
   return new Promise((resolve) =>
@@ -11,6 +12,7 @@ async function getCookieData() {
 }
 
 export const createClient = async () => {
+  noStore();
   const cookieStore = await getCookieData();
 
   return createServerClient(
